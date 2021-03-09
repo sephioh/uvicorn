@@ -62,8 +62,7 @@ class WSProtocol(asyncio.Protocol):
         self.scheme = "wss" if is_ssl(transport) else "ws"
 
     def connection_lost(self, exc):
-        if exc is not None:
-            self.queue.put_nowait({"type": "websocket.disconnect"})
+        self.queue.put_nowait({"type": "websocket.disconnect"})
         self.connections.remove(self)
 
     def eof_received(self):
